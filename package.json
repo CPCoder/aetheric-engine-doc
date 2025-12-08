@@ -1,0 +1,23 @@
+{
+  "name": "aetheric-engine-doc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "node server.ts",
+    "connect": "node connect.ts"
+  },
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "better-sqlite3": "^12.5.0",
+    "express": "^5.2.1",
+    "typescript": "^5.9.3"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "@types/express": "^5.0.6",
+    "@types/node": "^24.10.1"
+  }
+}

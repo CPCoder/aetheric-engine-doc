@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>KLBCC Database Viewer</title>
+    <style>
+        body { font-family: Arial; margin: 20px; }
+        h2 { margin-top: 40px; }
+        table { border-collapse: collapse; width: 100%; margin-top: 10px; }
+        th, td { border: 1px solid #ccc; padding: 8px; font-size: 14px; }
+        tr:nth-child(even) { background: #f0f0f0; }
+        .payload { font-family: monospace; }
+        .refresh-btn { padding: 6px 10px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+<h1>KLBCC Message Database</h1>
+
+<button class="refresh-btn" onclick="loadData()">Refresh</button>
+
+<h2>ASCII Messages</h2>
+<table id="asciiTable">
+    <thead><tr><th>ID</th><th>Payload</th></tr></thead>
+    <tbody></tbody>
+</table>
+
+<h2>Binary Messages</h2>
+<table id="binaryTable">
+    <thead><tr><th>ID</th><th>Payload (hex)</th></tr></thead>
+    <tbody></tbody>
+</table>
+
+<script>
+    async function loadData() {
+        loadAscii();
+        loadBinary();
+    }
+
+    async function loadAscii() {
+        const res = await fetch('/api/ascii');
+        const data = await res.json();
+        const tbody = document.querySelector('#asciiTable tbody');
+        tbody.innerHTML = '';
+
+        for (const row of data) {
+            const tr = document.createElement('tr');
+            const td_id = document.createElement('td');
+            const td_payload = document.createElement('td');
+            td_id.textContent = row.id;
+            td_payload.textContent = row.payload;
+            tr.appendChild(td_id);
+            tr.appendChild(td_payload);
+            tbody.appendChild(tr);
+        }
+    }
+
+    async function loadBinary() {
+        const res = await fetch('/api/binary');
+        const data = await res.json();
+        const tbody = document.querySelector('#binaryTable tbody');
+        tbody.innerHTML = '';
+
+        for (const row of data) {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+            <td>${row.id}</td>
+            <td class="payload">${row.payload}</td>
+        `;
+            tbody.appendChild(tr);
+        }
+    }
+
+    loadData();
+</script>
+
+</body>
+</html>
