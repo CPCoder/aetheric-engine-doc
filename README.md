@@ -2,6 +2,7 @@
 
 ## Download an parse messages
 To download and parse messages, run the following command: `npm run connect`
+The message parsing will automatically be stopped, once it received 600 messages.
 
 ## Show data from the database
 To show data from the database ...
